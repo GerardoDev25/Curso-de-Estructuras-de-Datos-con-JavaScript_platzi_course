@@ -32,6 +32,7 @@ class MySinglyLinkedList {
     this.tail = this.head;
     this.length = 1;
   }
+
   append(value) {
     const newNode = new Node(value);
     this.tail.next = newNode;
@@ -39,12 +40,44 @@ class MySinglyLinkedList {
     this.length++;
     return this;
   }
+
   prepend(value) {
     const newNode = new Node(value);
     newNode.next = this.head;
     this.head = newNode;
     this.length++;
     return this;
+  }
+
+  insert(index, value) {
+    if (this.length < index) {
+      this.append(index);
+    }
+
+    const newNode = new Node(value);
+    const firstPointer = this.getIndex(index - 1);
+    const holdingPointer = firstPointer.next;
+    firstPointer.next = newNode;
+    newNode.next = holdingPointer;
+    this.length++;
+    return this;
+  }
+
+  delete(index) {
+    const firstPinter = this.getIndex(index - 1);
+    const secondPinter = this.getIndex(index);
+    firstPinter.next = secondPinter.next;
+    return secondPinter;
+  }
+
+  getIndex(index) {
+    let counter = 0;
+    let currentNode = this.head;
+    while (index !== counter) {
+      currentNode = currentNode.next;
+      counter++;
+    }
+    return currentNode;
   }
 }
 
